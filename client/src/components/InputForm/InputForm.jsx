@@ -10,6 +10,7 @@ export function InputForm({ onSubmit, loading }) {
   const [activeType, setActiveType] = useState('text');
   const [inputText, setInputText] = useState('');
   const [inputUrl, setInputUrl] = useState('');
+  const [inputQuestion, setInputQuestion] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [validationError, setValidationError] = useState('');
@@ -125,7 +126,20 @@ export function InputForm({ onSubmit, loading }) {
     }
 
     if (activeType === 'question') {
-      setValidationError('Question mode will be activated in Phase 4.');
+      const trimmed = inputQuestion.trim();
+      if (!trimmed) {
+        setValidationError('Please enter a question to research.');
+        return;
+      }
+      if (trimmed.length < 5) {
+        setValidationError('Please enter a question with at least 5 characters.');
+        return;
+      }
+      if (trimmed.length > 500) {
+        setValidationError('Question exceeds the maximum length of 500 characters.');
+        return;
+      }
+      onSubmit('question', trimmed);
       return;
     }
   };
@@ -135,7 +149,8 @@ export function InputForm({ onSubmit, loading }) {
   const isSubmitDisabled = loading ||
     (activeType === 'text' && !inputText.trim()) ||
     (activeType === 'link' && !inputUrl.trim()) ||
-    (activeType === 'image' && !selectedFile);
+    (activeType === 'image' && !selectedFile) ||
+    (activeType === 'question' && !inputQuestion.trim());
 
   return (
     <section className="input-form-card">
@@ -174,7 +189,7 @@ export function InputForm({ onSubmit, loading }) {
           className={`tab-btn ${activeType === 'question' ? 'tab-active' : ''}`}
           onClick={() => handleTabChange('question')}
         >
-          ❓ Open Question <span className="tab-pill">Phase 4</span>
+          ❓ Open Question
         </button>
       </div>
 
@@ -260,8 +275,28 @@ export function InputForm({ onSubmit, loading }) {
         )}
 
         {activeType === 'question' && (
-          <div className="placeholder-pane">
-            <p>Open Question Mode with cited neutral summaries will be activated in Phase 4.</p>
+          <div className="input-group">
+            <label htmlFor="question-text-input" className="input-label">
+              Ask an open question to research across news sources:
+            </label>
+            <textarea
+              id="question-text-input"
+              rows={4}
+              className="text-input-field"
+              placeholder="e.g., 'What happened in New York last year?' or 'Did the climate summit reach an agreement?'"
+              value={inputQuestion}
+              onChange={(e) => setInputQuestion(e.target.value)}
+              disabled={loading}
+              maxLength={500}
+            />
+            <div className="char-counter-line">
+              <span className={`char-counter ${inputQuestion.length > 450 ? 'counter-warning' : ''}`}>
+                {inputQuestion.length} / 500 characters
+              </span>
+            </div>
+            <p className="input-help-text">
+              Question mode returns a neutral, cited synthesis of what retrieved sources report, noting dates and conflicting accounts without forcing a fake/real verdict.
+            </p>
           </div>
         )}
 
@@ -277,7 +312,11 @@ export function InputForm({ onSubmit, loading }) {
             className="submit-btn"
             disabled={isSubmitDisabled}
           >
-            {loading ? 'Analyzing Content...' : 'Check with Evidence ↗'}
+            {loading
+              ? 'Researching Sources...'
+              : activeType === 'question'
+              ? 'Research Question ↗'
+              : 'Check with Evidence ↗'}
           </button>
         </div>
       </form>

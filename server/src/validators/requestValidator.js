@@ -1,6 +1,6 @@
 // server/src/validators/requestValidator.js
 import { z } from 'zod';
-import { MAX_TEXT_LENGTH } from '../config/constants.js';
+import { MAX_TEXT_LENGTH, MAX_QUESTION_LENGTH } from '../config/constants.js';
 import { AppError } from '../middleware/errorHandler.js';
 
 export const checkRequestSchema = z.object({
@@ -26,6 +26,16 @@ export function validateCheckRequest(body) {
   const { type, payload } = result.data;
   if (type === 'text' && payload.length > MAX_TEXT_LENGTH) {
     throw new AppError(`Text payload exceeds maximum limit of ${MAX_TEXT_LENGTH} characters.`, 400);
+  }
+
+  if (type === 'question') {
+    const trimmed = payload.trim();
+    if (trimmed.length < 5) {
+      throw new AppError('Question is too short. Please ask a question with at least 5 characters.', 400);
+    }
+    if (trimmed.length > MAX_QUESTION_LENGTH) {
+      throw new AppError(`Question exceeds maximum limit of ${MAX_QUESTION_LENGTH} characters.`, 400);
+    }
   }
 
   return { type, payload };

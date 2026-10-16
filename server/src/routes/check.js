@@ -3,7 +3,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { validateCheckRequest } from '../validators/requestValidator.js';
 import { checkGlobalCap } from '../middleware/rateLimiter.js';
-import { verifyTextContent, verifyImageContent } from '../services/gemini.js';
+import { verifyTextContent, verifyImageContent, answerQuestion } from '../services/gemini.js';
 import { safeFetch } from '../services/safeFetch.js';
 import { extractArticle } from '../services/articleExtractor.js';
 import { processImage, MAX_IMAGE_FILE_SIZE } from '../services/imageProcessor.js';
@@ -91,7 +91,8 @@ checkRouter.post('/check', handleUpload, async (req, res, next) => {
     }
 
     if (type === 'question') {
-      throw new AppError('Question mode will be enabled in Phase 4.', 400);
+      const result = await answerQuestion(payload);
+      return res.status(200).json(result);
     }
 
     throw new AppError('Unsupported input type.', 400);

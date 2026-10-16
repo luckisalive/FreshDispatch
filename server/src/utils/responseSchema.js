@@ -22,16 +22,21 @@ export const sourceItemSchema = z.object({
 });
 
 export const verificationResponseSchema = z.object({
+  mode: z.literal('verification').optional().default('verification'),
   claims: z.array(claimSchema).max(3),
   sourcePanel: z.array(sourceItemSchema),
   nonCheckableReason: z.string().optional().default(''),
 });
 
 export const questionResponseSchema = z.object({
+  mode: z.literal('question').default('question'),
+  query: z.string().default(''),
   summary: z.string().min(1),
-  sources: z.array(evidenceSchema),
+  keyDates: z.array(z.string()).default([]),
   conflictingAccounts: z.string().optional().default(''),
   limitations: z.string().default(''),
+  sources: z.array(evidenceSchema).default([]),
+  sourcePanel: z.array(sourceItemSchema).default([]),
 });
 
 /**
