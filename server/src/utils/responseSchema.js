@@ -14,6 +14,8 @@ export const claimSchema = z.object({
   explanation: z.string().min(1),
   evidence: z.array(evidenceSchema),
   limitations: z.string().default(''),
+  wasAutoCorrected: z.boolean().optional().default(false),
+  originalVerdict: z.string().optional(),
 });
 
 export const sourceItemSchema = z.object({

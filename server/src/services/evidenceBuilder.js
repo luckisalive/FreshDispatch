@@ -58,9 +58,14 @@ export function buildEvidence(structuredResult, groundingMetadata, presentMarker
     // Enforce: non-Unverified verdict MUST have surviving evidence
     const needsEvidence = ['Supported', 'Contradicted', 'Mixed'];
     if (needsEvidence.includes(claim.verdict) && claim.evidence.length === 0) {
+      claim.wasAutoCorrected = true;
+      claim.originalVerdict = claim.verdict;
       claim.verdict = 'Unverified';
       claim.limitations = (claim.limitations ? claim.limitations + ' ' : '') +
         '[Auto-corrected: claim lacked verified source attribution from search grounding.]';
+    } else {
+      claim.wasAutoCorrected = false;
+      claim.originalVerdict = claim.verdict;
     }
 
     // supportIndices was used for internal mapping; remove before client delivery

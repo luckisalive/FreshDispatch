@@ -29,11 +29,17 @@ export function useCheck() {
     setError(null);
   };
 
+  const setResultDirectly = (data) => {
+    setResult(data);
+    setError(null);
+  };
+
   return {
     loading,
     error,
     result,
     runCheck,
     clearResult,
+    setResultDirectly,
   };
 }

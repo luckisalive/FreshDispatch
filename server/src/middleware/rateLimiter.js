@@ -8,6 +8,15 @@ export const perIpLimiter = rateLimit({
   limit: parseInt(process.env.RATE_LIMIT_PER_IP, 10) || DEFAULT_RATE_LIMIT_PER_IP,
   standardHeaders: 'draft-7',
   legacyHeaders: false,
+  skip: () => {
+    if (process.env.RATE_LIMIT_BYPASS === 'true') {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('FATAL SECURITY ERROR: RATE_LIMIT_BYPASS is forbidden in production');
+      }
+      return true;
+    }
+    return false;
+  },
   message: { error: 'Rate limit exceeded. You may perform approximately 10 checks per hour.' },
 });
 
@@ -15,6 +24,13 @@ export const perIpLimiter = rateLimit({
 const inFlightByIp = new Map();
 
 export function concurrencyLimiter(req, res, next) {
+  if (process.env.RATE_LIMIT_BYPASS === 'true') {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('FATAL SECURITY ERROR: RATE_LIMIT_BYPASS is forbidden in production');
+    }
+    return next();
+  }
+
   const ip = req.ip;
   const current = inFlightByIp.get(ip) || 0;
 

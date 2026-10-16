@@ -1,17 +1,22 @@
-// client/src/App.jsx
 import React from 'react';
 import { InputForm } from './components/InputForm/InputForm';
 import { Results } from './components/Results/Results';
+import { HistoryPanel } from './components/History/HistoryPanel';
 import { LoadingSpinner } from './components/common/LoadingSpinner';
 import { ErrorMessage } from './components/common/ErrorMessage';
 import { useCheck } from './hooks/useCheck';
+import { useHistory } from './hooks/useHistory';
 import './App.css';
 
 export default function App() {
-  const { loading, error, result, runCheck, clearResult } = useCheck();
+  const { loading, error, result, runCheck, clearResult, setResultDirectly } = useCheck();
+  const { history, addEntry, deleteEntry, clearAll } = useHistory();
 
-  const handleCheckSubmit = (type, payload) => {
-    runCheck(type, payload);
+  const handleCheckSubmit = async (type, payload) => {
+    const data = await runCheck(type, payload);
+    if (data) {
+      addEntry(type, payload, data);
+    }
   };
 
   return (
@@ -38,6 +43,13 @@ export default function App() {
         {!loading && result && (
           <Results data={result} />
         )}
+
+        <HistoryPanel
+          history={history}
+          onSelectEntry={setResultDirectly}
+          onDeleteEntry={deleteEntry}
+          onClearAll={clearAll}
+        />
       </main>
 
       <footer className="app-footer">

@@ -9,7 +9,9 @@
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
-    "test:phase0": "node eval/test-two-call-pipeline.js"
+    "test:phase0": "node eval/test-two-call-pipeline.js",
+    "test:security": "node eval/security-tests/injection-tests.js && node eval/security-tests/ssrf-tests.js && node eval/security-tests/video-block-tests.js && node eval/security-tests/upload-tests.js && node eval/security-tests/question-mode-tests.js",
+    "eval": "node eval/run-eval.js"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
