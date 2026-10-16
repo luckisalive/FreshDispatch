@@ -1,0 +1,249 @@
+/* client/src/App.css */
+/* Editorial Verification Design System Tokens */
+
+:root {
+  /* Surface Tokens */
+  --color-canvas: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-muted: #e9edff;
+  --color-border: #e2e5eb;
+  --color-border-subtle: #eef2fd;
+
+  /* Typography / Text Colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #1f2937;
+  --color-text-muted: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-text-inverse: #ffffff;
+
+  /* Interactive Primary */
+  --color-primary: #2457d6;
+  --color-primary-hover: #1b44aa;
+  --color-primary-active: #15368a;
+  --color-primary-soft: #eef2fd;
+  --color-primary-ring: rgba(36, 87, 214, 0.2);
+
+  /* Semantic Verdict Tokens */
+  --verdict-supported-text: #0d7a53;
+  --verdict-supported-bg: #ecfdf5;
+  --verdict-supported-border: #a7f3d0;
+
+  --verdict-contradicted-text: #b91c1c;
+  --verdict-contradicted-bg: #fef2f2;
+  --verdict-contradicted-border: #fecaca;
+
+  --verdict-unverified-text: #475569;
+  --verdict-unverified-bg: #f1f5f9;
+  --verdict-unverified-border: #cbd5e1;
+
+  --verdict-mixed-text: #b45309;
+  --verdict-mixed-bg: #fffbeb;
+  --verdict-mixed-border: #fde68a;
+
+  /* Font Families */
+  --font-editorial: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Radii */
+  --radius-sm: 0.125rem;
+  --radius-base: 0.25rem;   /* 4px - inputs, buttons */
+  --radius-card: 0.5rem;    /* 8px - cards, containers */
+  --radius-pill: 9999px;    /* badges, pills */
+
+  /* Shadows (Restrained editorial micro-diffused) */
+  --shadow-layer1: 0 1px 3px 0 rgba(17, 24, 39, 0.03), 0 1px 2px -1px rgba(17, 24, 39, 0.02);
+  --shadow-layer2: 0 10px 15px -3px rgba(17, 24, 39, 0.06), 0 4px 6px -4px rgba(17, 24, 39, 0.03);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-canvas);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Wrapper & Layout */
+.app-wrapper {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(36, 87, 214, 0.15);
+  margin-bottom: 0.85rem;
+}
+
+.app-title {
+  font-family: var(--font-editorial);
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 52px;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.015em;
+  }
+}
+
+.app-tagline {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 24px;
+}
+
+/* Main Content */
+.app-main {
+  flex: 1;
+}
+
+/* Loading State (Restrained Editorial) */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-layer1);
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-message {
+  margin: 1.25rem 0 0.25rem 0;
+  font-family: var(--font-editorial);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.loading-subtext {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.01em;
+}
+
+/* Error Banner (Semantic Contradicted / Error tokens) */
+.error-banner {
+  background-color: var(--verdict-contradicted-bg);
+  border: 1px solid var(--verdict-contradicted-border);
+  border-left: 3px solid var(--verdict-contradicted-text);
+  border-radius: var(--radius-base);
+  padding: 1rem 1.25rem;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.error-content {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.error-icon {
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+
+.error-text {
+  color: var(--verdict-contradicted-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-text strong {
+  font-weight: 600;
+}
+
+.error-dismiss-btn {
+  background: transparent;
+  border: none;
+  color: var(--verdict-contradicted-text);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s ease;
+  line-height: 1;
+}
+
+.error-dismiss-btn:hover {
+  opacity: 0.7;
+}
+
+/* Footer */
+.app-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+  color: var(--color-text-tertiary);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.app-footer p {
+  margin: 0.35rem 0;
+}

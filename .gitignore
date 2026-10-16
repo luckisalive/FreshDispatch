@@ -1,0 +1,27 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Evaluation run artifacts
+eval/results/*.json
+!eval/results/.gitkeep
+
+# Project decision log (ignored as requested)
+docs/decisions.md
+decisions.md
+stitch/

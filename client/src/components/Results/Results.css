@@ -1,0 +1,451 @@
+/* client/src/components/Results/Results.css */
+
+.results-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Disclaimer Banner */
+.disclaimer-banner {
+  background-color: var(--verdict-mixed-bg);
+  border: 1px solid var(--verdict-mixed-border);
+  border-left: 3px solid var(--verdict-mixed-text);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-base);
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.disclaimer-badge {
+  background-color: var(--verdict-mixed-text);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+.disclaimer-text {
+  margin: 0;
+  color: var(--verdict-mixed-text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Non-checkable box */
+.non-checkable-box {
+  background-color: var(--verdict-unverified-bg);
+  border: 1px solid var(--verdict-unverified-border);
+  border-left: 3px solid var(--verdict-unverified-text);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-base);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.non-checkable-box strong {
+  font-weight: 600;
+  color: var(--verdict-unverified-text);
+}
+
+/* Claims Section */
+.claims-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.results-heading {
+  font-family: var(--font-editorial);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.claims-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Claim Card:
+   Crisp #FFFFFF surface, 1px #E2E5EB hairline perimeter, 8px corner radius,
+   internal padding space-lg (24px), 3px inset vertical rule colored corresponding to verdict token. */
+.claim-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-layer1);
+  position: relative;
+  transition: box-shadow 0.15s ease;
+}
+
+.claim-card:hover {
+  box-shadow: var(--shadow-layer2);
+}
+
+/* 3px Inset Vertical Rule on Left Boundary */
+.claim-card.verdict-accent-supported {
+  border-left: 3px solid var(--verdict-supported-text);
+}
+
+.claim-card.verdict-accent-contradicted {
+  border-left: 3px solid var(--verdict-contradicted-text);
+}
+
+.claim-card.verdict-accent-unverified {
+  border-left: 3px solid var(--verdict-unverified-text);
+}
+
+.claim-card.verdict-accent-mixed {
+  border-left: 3px solid var(--verdict-mixed-text);
+}
+
+.claim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-canvas);
+}
+
+.claim-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.claim-number {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  font-weight: 600;
+}
+
+.claim-badges {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+/* Fact-Checking Verdict Chips (DESIGN.md):
+   Rendered with full roundedness (rounded-full), space-xs (0.25rem) vertical padding, space-sm (0.5rem) horizontal padding.
+   Consists of a 6px solid status dot, accompanied by label-sm uppercase text. */
+.verdict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+}
+
+.verdict-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.verdict-supported {
+  background-color: var(--verdict-supported-bg);
+  color: var(--verdict-supported-text);
+  border-color: var(--verdict-supported-border);
+}
+.verdict-supported .verdict-dot {
+  background-color: var(--verdict-supported-text);
+}
+
+.verdict-contradicted {
+  background-color: var(--verdict-contradicted-bg);
+  color: var(--verdict-contradicted-text);
+  border-color: var(--verdict-contradicted-border);
+}
+.verdict-contradicted .verdict-dot {
+  background-color: var(--verdict-contradicted-text);
+}
+
+.verdict-unverified {
+  background-color: var(--verdict-unverified-bg);
+  color: var(--verdict-unverified-text);
+  border-color: var(--verdict-unverified-border);
+}
+.verdict-unverified .verdict-dot {
+  background-color: var(--verdict-unverified-text);
+}
+
+.verdict-mixed {
+  background-color: var(--verdict-mixed-bg);
+  color: var(--verdict-mixed-text);
+  border-color: var(--verdict-mixed-border);
+}
+.verdict-mixed .verdict-dot {
+  background-color: var(--verdict-mixed-text);
+}
+
+.confidence-badge {
+  background-color: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-pill);
+}
+
+/* Claim Text: Editorial Serif Newsreader */
+.claim-text {
+  font-family: var(--font-editorial);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  margin: 0.5rem 0 1.25rem 0;
+}
+
+.claim-section {
+  margin-top: 1.25rem;
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  margin: 0 0 0.45rem 0;
+  font-weight: 600;
+}
+
+.explanation-text {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 24px;
+}
+
+/* Evidence List */
+.evidence-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.6rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.evidence-item {
+  background: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  padding: 0.85rem 1.15rem;
+}
+
+.evidence-source-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.45rem;
+  gap: 0.5rem;
+}
+
+.evidence-source-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Citation Indices: Compact pill indicators with numerical labels ([1], [2]) */
+.citation-pill {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  background-color: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.45rem;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.15s ease;
+}
+
+.citation-pill:hover {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-color: rgba(36, 87, 214, 0.2);
+}
+
+.evidence-source-name {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.source-link,
+.source-redirect-link {
+  color: var(--color-primary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.source-link:hover,
+.source-redirect-link:hover {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+.evidence-summary-container {
+  margin-top: 0.45rem;
+  padding-left: 0.25rem;
+}
+
+.ai-summary-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.evidence-summary-text {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.no-evidence-note {
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  font-style: italic;
+  margin: 0.35rem 0 0 0;
+}
+
+.claim-limitations {
+  margin-top: 1.25rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.claim-limitations strong {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+/* Source Credibility Panel */
+.source-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-layer1);
+}
+
+.source-panel-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.source-panel-title {
+  margin: 0 0 0.25rem 0;
+  font-family: var(--font-editorial);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.source-credibility-note {
+  margin: 0;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  font-style: normal;
+}
+
+.source-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.source-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-base);
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-border);
+  font-size: 13px;
+}
+
+.source-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.source-name {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.source-panel-footer {
+  margin-top: 1rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--color-canvas);
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+}

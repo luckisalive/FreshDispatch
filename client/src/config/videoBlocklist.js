@@ -1,0 +1,60 @@
+// client/src/config/videoBlocklist.js
+// Centralized video blocklist policy for client-side pre-validation
+
+export const VIDEO_HOSTS = [
+  'youtube.com',
+  'youtu.be',
+  'vimeo.com',
+  'tiktok.com',
+  'dailymotion.com',
+  'rumble.com',
+  'bitchute.com',
+  'twitch.tv',
+];
+
+export const VIDEO_PATH_PATTERNS = [
+  { host: 'facebook.com', pathSegment: '/watch' },
+  { host: 'instagram.com', pathSegment: '/reel' },
+  { host: 'x.com', pathSegment: '/status' },
+  { host: 'twitter.com', pathSegment: '/status' },
+];
+
+export const VIDEO_EXTENSIONS = [
+  '.mp4',
+  '.mov',
+  '.avi',
+  '.mkv',
+  '.webm',
+  '.flv',
+  '.wmv',
+  '.m4v',
+  '.3gp',
+  '.ogv',
+];
+
+export function isVideoUrl(urlString) {
+  try {
+    const url = new URL(urlString);
+    const host = url.hostname.toLowerCase();
+    const pathname = url.pathname.toLowerCase();
+
+    // Check host list
+    if (VIDEO_HOSTS.some(h => host === h || host.endsWith('.' + h))) {
+      return true;
+    }
+
+    // Check path patterns
+    if (VIDEO_PATH_PATTERNS.some(p => (host === p.host || host.endsWith('.' + p.host)) && pathname.includes(p.pathSegment))) {
+      return true;
+    }
+
+    // Check direct video file extensions
+    if (VIDEO_EXTENSIONS.some(ext => pathname.endsWith(ext))) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+}
