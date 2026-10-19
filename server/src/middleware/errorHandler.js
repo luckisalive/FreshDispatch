@@ -23,6 +23,7 @@ export function errorHandler(err, req, res, next) {
     path: req.path,
     statusCode,
     errorName: err.name || 'Error',
+    errorMessage: err.message,
   };
   console.error('[Error Log]', JSON.stringify(meta));
 
@@ -34,6 +35,8 @@ export function errorHandler(err, req, res, next) {
     message = err.message || 'Invalid request format or parameters.';
   } else if (statusCode === 502) {
     message = err.message || 'Upstream service error while verifying claims. Please try again.';
+  } else if (err instanceof AppError && err.message) {
+    message = err.message;
   } else if (statusCode < 500) {
     message = err.message;
   }

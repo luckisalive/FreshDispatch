@@ -21,7 +21,23 @@ Thumbs.db
 eval/results/*.json
 !eval/results/.gitkeep
 
-# Project decision log (ignored as requested)
+# Project decision log and design artifacts (ignored as requested)
 docs/decisions.md
 decisions.md
 stitch/
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/

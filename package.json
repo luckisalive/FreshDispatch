@@ -8,8 +8,11 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "start": "node server/src/index.js",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
     "test:phase0": "node eval/test-two-call-pipeline.js",
+    "test:fallback": "node eval/test-model-fallback.js",
     "test:security": "node eval/security-tests/injection-tests.js && node eval/security-tests/ssrf-tests.js && node eval/security-tests/video-block-tests.js && node eval/security-tests/upload-tests.js && node eval/security-tests/question-mode-tests.js",
     "eval": "node eval/run-eval.js"
   },

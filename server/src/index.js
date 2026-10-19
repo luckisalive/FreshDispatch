@@ -2,14 +2,21 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { checkRouter } from './routes/check.js';
 import { perIpLimiter, concurrencyLimiter } from './middleware/rateLimiter.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { DEFAULT_PORT } from './config/constants.js';
 
-// Load environment variables from .env
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load environment variables from .env (check cwd, server dir, and project root)
 dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
 const PORT = process.env.PORT || DEFAULT_PORT;
@@ -45,12 +52,22 @@ app.get('/api/health', (req, res) => {
 // 7. API Routes
 app.use('/api', checkRouter);
 
-// 8. 404 handler for unknown routes
-app.use((req, res) => {
+// 8. Serve built frontend static assets if available (Unified production deployment)
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
+
+// 9. 404 handler for unmatched API routes
+app.use('/api/*', (req, res) => {
   res.status(404).json({ error: 'Endpoint not found.' });
 });
 
-// 9. Centralized safe error handler (must be registered last)
+// 10. Centralized safe error handler (must be registered last)
 app.use(errorHandler);
 
 const server = app.listen(PORT, () => {
