@@ -1,5 +1,9 @@
 # FreshDispatch — Evidence-Based News & Claim Checker
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-freshdispatch.onrender.com-2457D6?style=for-the-badge&logo=render&logoColor=white)](https://freshdispatch.onrender.com)
+
+🌐 **Live Application:** [https://freshdispatch.onrender.com](https://freshdispatch.onrender.com)
+
 FreshDispatch is a production-ready, full-stack web application built to demonstrate an AI-in-web-development project for an academic viva. It allows anyone (no sign-up, no login, zero tracking) to verify news items, claims, article links, screenshots, and open questions.
 
 Instead of outputting an arbitrary "Fake" or "Real" stamp, FreshDispatch extracts independently testable claims, retrieves real-time evidence using Google Search grounding, and returns a nuanced verdict (**Supported**, **Contradicted**, **Unverified**, or **Mixed**) with cited sources, dates, qualitative confidence, plain-language reasoning, and stated limitations.
@@ -238,11 +242,11 @@ npm start
    - `NODE_ENV`: `production`
    - `PORT`: `3001` (or leave default; Render automatically binds `$PORT`)
    - `TRUST_PROXY`: `1` *(Render runs behind a single reverse proxy; prevents all users from sharing one rate limit)*
-   - `FRONTEND_ORIGIN`: `https://your-app-name.onrender.com`
+   - `FRONTEND_ORIGIN`: `https://freshdispatch.onrender.com`
    - `DAILY_GLOBAL_CAP`: `600`
    - `RATE_LIMIT_PER_IP`: `10`
    - `RATE_LIMIT_BYPASS`: `false`
-5. Click **Deploy Web Service**. FreshDispatch will install all dependencies, compile the React bundle with Vite, and serve both the API and client on your Render domain.
+5. Click **Deploy Web Service**. FreshDispatch will install all dependencies, compile the React bundle with Vite, and serve both the API and client on your Render domain (`https://freshdispatch.onrender.com`).
 
 ---
 
@@ -307,7 +311,7 @@ If you prefer hosting the React client on a CDN (Vercel/Netlify) and the backend
 | `GEMINI_MODEL` | `gemini-3.5-flash` | Primary grounded inference model. |
 | `GEMINI_FALLBACK_MODELS` | `gemini-3.6-flash,gemini-3.5-flash-lite` | Automatic fallback chain if the primary model encounters 503 demand spikes. |
 | `PORT` | `3001` or `$PORT` | Port on which Express listens. |
-| `FRONTEND_ORIGIN` | `https://yourdomain.com` | Restricts CORS headers strictly to your client origin; prevents cross-origin API abuse. |
+| `FRONTEND_ORIGIN` | `https://freshdispatch.onrender.com` | Restricts CORS headers strictly to your client origin; prevents cross-origin API abuse. |
 | `TRUST_PROXY` | `1` (or `true` behind Cloudflare) | **Critical:** Ensures `req.ip` reflects the true client IP instead of the reverse proxy IP. If left as `false` behind a proxy, all users share one IP and exhaust rate limits instantly. |
 | `DAILY_GLOBAL_CAP` | `600` | Prevents quota exhaustion or runaway API charges by capping daily Gemini calls. Resets at UTC midnight. |
 | `RATE_LIMIT_PER_IP` | `10` | Caps requests per IP per hour to prevent scraping and abuse. |
