@@ -212,31 +212,37 @@ In this setup, a single Node.js process serves the Express API on `/api/*` and s
 
 #### Build & Start Commands:
 ```bash
-# Build Command
-npm install && npm run build
+# Build Command (installs server & client dependencies and compiles Vite)
+npm run build
 
-# Start Command
+# Start Command (launches Express production server)
 npm start
 ```
 
+> [!NOTE]
+> **Why `npm run build` resolves "vite: not found" on Render:**
+> Standard Node build hosts only run `npm install` at the repository root and skip `devDependencies` when `NODE_ENV=production`. In FreshDispatch, root `package.json` configures npm workspaces and defines `build` as:
+> `npm install --prefix server --omit=dev && npm install --prefix client --include=dev && npm run build --prefix client`
+> Additionally, `vite` is included directly in `client/package.json` dependencies. This guarantees that `vite` is always installed and available in `$PATH` during deployment.
+
 #### Step-by-Step for Render / Railway:
 1. Push your repository to GitHub.
-2. In your cloud provider dashboard, click **New Web Service** and select your repository.
-3. Set the following build and start parameters:
-   - **Environment:** Node
-   - **Build Command:** `npm run install:all && npm run build`
+2. In your Render dashboard, click **New Web Service** and select your repository.
+3. Configure the build and start settings:
+   - **Environment:** `Node`
+   - **Build Command:** `npm run build`
    - **Start Command:** `npm start`
 4. Add the required Environment Variables:
    - `GEMINI_API_KEY`: *(Your Google AI Studio API Key)*
    - `GEMINI_MODEL`: `gemini-3.5-flash`
    - `NODE_ENV`: `production`
-   - `PORT`: `3001` (or let provider inject `$PORT`)
-   - `TRUST_PROXY`: `1` *(Render/Railway run behind a single reverse proxy)*
+   - `PORT`: `3001` (or leave default; Render automatically binds `$PORT`)
+   - `TRUST_PROXY`: `1` *(Render runs behind a single reverse proxy; prevents all users from sharing one rate limit)*
    - `FRONTEND_ORIGIN`: `https://your-app-name.onrender.com`
    - `DAILY_GLOBAL_CAP`: `600`
    - `RATE_LIMIT_PER_IP`: `10`
    - `RATE_LIMIT_BYPASS`: `false`
-5. Click **Deploy**. The platform will build the client, bundle the server, and serve the application on a single unified URL.
+5. Click **Deploy Web Service**. FreshDispatch will install all dependencies, compile the React bundle with Vite, and serve both the API and client on your Render domain.
 
 ---
 

@@ -4,11 +4,16 @@
   "description": "Evidence-Based News & Claim Checker",
   "type": "module",
   "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm run dev --prefix server",
     "dev:client": "npm run dev --prefix client",
-    "build": "npm run build --prefix client",
+    "build:client": "npm run build --prefix client",
+    "build": "npm install --prefix server --omit=dev && npm install --prefix client --include=dev && npm run build --prefix client",
     "start": "node server/src/index.js",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
     "test:phase0": "node eval/test-two-call-pipeline.js",
